@@ -520,15 +520,12 @@
     document.getElementById('startScreen').style.display = 'flex';
   }, 3000);
 
-  const audio = new Audio("https://github.com/MrLampy/Papa-2025-48-HBD.git/Happy_Birthday_Jazzy_Piano_Arrangement_by_Jonny_May");
-  function onPlayerReady(event) {
+    const audio = new Audio("https://github.com/MrLampy/Papa-2025-48-HBD.git/Happy_Birthday_Jazzy_Piano_Arrangement_by_Jonny_May");
     var startScreen = document.getElementById('startScreen');
-
     startScreen.addEventListener('click', function () {
       startScreen.style.display = 'none';
       audio.play()
     });
-  }
 
   </script>
 </body>
