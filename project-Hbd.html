@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Dad!</title>
+  <style>
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    body {
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        background: linear-gradient(to top left, #d3e4f1, #ffffff);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100vw 100vh;
+        text-align: center;
+        position: relative;
+    }
+
+    h1 {
+      font-size: 2.8em;
+      color: #ff6699;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border: 4px dotted #ff99cc;
+      padding: 20px;
+      max-width: 600px;
+      margin: 30px auto;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      z-index: 1;
+      position: relative;
+    }
+
+    .img-main {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 6px solid #ff99cc;
+      margin: 10px 0px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      object-position: 73% center;
+    transition: transform 0.6s ease;
+    transform-style: preserve-3d;
+    }
+
+    .flip {
+    transform: rotateY(180deg);
+  }
+
+.cute-button {
+  position: relative;
+  overflow: visible;
+  background-color: #ff99cc; /* your requested color */
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 153, 204, 0.4);
+  transition: all 0.2s ease;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.cute-button:hover {
+  background-color: #ff85c1; /* slightly deeper pink on hover */
+  transform: scale(1.05) rotate(-1deg);
+  box-shadow: 0 6px 16px rgba(255, 153, 204, 0.6);
+}
+
+.cute-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(255, 153, 204, 0.5);
+}
+
+/* The wave effect */
+.button-wave {
+  content: '';
+  position: absolute;
+  
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 30px;
+  border: 6px solid rgba(255, 255, 255, 0.7);
+  animation: wave-around 0.6s ease-out;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes wave-around {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+    .balloon-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .balloon-wrapper {
+      position: absolute;
+      animation: floatSway 6s ease-in forwards;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .balloon {
+      width: 40px;
+      height: 55px;
+      background-color: red;
+      border-radius: 50% 50% 45% 45%;
+      opacity: 0.9;
+    }
+
+    .string {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 2px;
+      pointer-events: none;
+    }
+
+    .string-segment {
+      width: 2px;
+      height: 5px;
+      background-color: #555;
+      animation: snakeWiggle 2.5s infinite ease-in-out;
+      transform-origin: top center;
+    }
+
+    @keyframes snakeWiggle {
+      0%   { transform: rotate(10deg); }
+      25%  { transform: rotate(33deg); }
+      50%  { transform: rotate(-29deg); }
+      75%  { transform: rotate(33deg); }
+      100% { transform: rotate(5deg); }
+    }
+
+    @keyframes floatSway {
+      0% {
+        transform: translateX(0) translateY(100vh);
+        opacity: 1;
+      }
+      50% {
+        transform: translateX(-10px) translateY(50vh);
+      }
+      100% {
+        transform: translateX(0) translateY(-120vh);
+        opacity: 0;
+      }
+    }
+
+  #loadingScreen, #startScreen {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #d3e4f1;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    user-select: none;
+    z-index: 1000;
+  }
+  #startScreen {
+    cursor: pointer;
+    display: none; /* hide start screen initially */
+  }
+  #player {
+    display: none; /* hide iframe */
+  }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 1em;
+      color: #888;
+    }
+
+    .corner-wrapper {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        pointer-events: none;
+    }
+
+    .corner-decor {
+        position: absolute;
+        width: 110%;
+        height: auto;
+        opacity: 0;
+        transition: opacity 3s ease-in-out;
+    }
+
+    .top-left {
+        top: -70px;
+        left: -220px;
+    }
+    .top-right {
+        top: -60px;
+        right: -220px;
+        transform: scaleX(-1);
+    }
+    .bottom-left {
+        bottom: -70px;
+        left: -220px;
+        transform: scaleY(-1);
+    }
+    .bottom-right {
+        bottom: -60px;
+        right: -220px;
+        transform: scale(-1, -1);
+    }
+
+    .sparkle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: white;
+        border-radius: 50%;
+        filter: drop-shadow(0 0 3px white);
+        opacity: 0.9;
+        transform-origin: center;
+        animation: sparkle-move 0.6s forwards ease-out;
+    }
+
+@keyframes sparkle-move {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--distance) * cos(var(--angle))), calc(var(--distance) * sin(var(--angle)))) scale(0.2);
+  }
+}
+
+    @media(max-width: 768px){
+     .card {
+      background: #fff;
+      border: 4px dotted #ff99cc;
+      padding: 20px;
+      max-width: 300px;
+      margin: 30px auto;
+      margin-top: 80px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      z-index: 1;
+      position: relative;
+      }
+      h1 {
+      font-size: 1.7em;
+      color: #ff6699;
+     margin-top: 20px;
+     }
+    .img-main {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 6px solid #ff99cc;
+      margin: 20px 0px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      object-position: 73% center;
+    transition: transform 0.6s ease;
+    transform-style: preserve-3d;
+    }
+    }
+
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div id="loadingScreen">Loading<span id="dots"></span></div>
+    <div id="startScreen">Click anywhere to start</div>
+
+    <div class="corner-wrapper top-left">
+        <img src="https://media-public.canva.com/KIwBA/MAFeooKIwBA/1/t.png" class="corner-decor corner-seq" style="transform: rotate(10deg); top: -80px"/>
+        <img src="https://media-public.canva.com/BtMMM/MAFyKzBtMMM/1/tl.png" class="corner-decor corner-seq" style="top: 10px; width: 120%; height: auto;"/>
+        <img src="https://media-public.canva.com/htpDo/MAFCbYhtpDo/1/tl.png" class="corner-decor corner-seq" style="top: -80px;"/>
+        <img src="https://media-public.canva.com/F9Gms/MAEec6F9Gms/1/tl.png" class="corner-decor corner-seq" />
+        <img src="https://media-public.canva.com/c2bWA/MAFtw5c2bWA/1/tl.png" class="corner-decor corner-seq" style="top: -80px;"/>
+    </div>
+
+    <div class="corner-wrapper top-right">
+        <img src="https://media-public.canva.com/c2bWA/MAFtw5c2bWA/1/tl.png" class="corner-decor corner-seq" style="top: -120px;"/>
+        <img src="https://media-public.canva.com/F9Gms/MAEec6F9Gms/1/tl.png" class="corner-decor corner-seq" />
+        <img src="https://media-public.canva.com/KIwBA/MAFeooKIwBA/1/t.png" class="corner-decor corner-seq" style="transform: rotate(10deg); top: -80px"/>
+        <img src="https://media-public.canva.com/htpDo/MAFCbYhtpDo/1/tl.png" class="corner-decor corner-seq" style="top: -80px;"/>
+        <img src="https://media-public.canva.com/BtMMM/MAFyKzBtMMM/1/tl.png" class="corner-decor corner-seq" style="top: 10px; width: 120%; height: auto;"/>
+    </div>
+
+    <div class="corner-wrapper bottom-left">
+        <img src="https://media-public.canva.com/htpDo/MAFCbYhtpDo/1/tl.png" class="corner-decor corner-seq watch" style="top: -80px; filter: contrast(120%); transform: rotate(15deg);"/>
+        <img src="https://media-public.canva.com/KIwBA/MAFeooKIwBA/1/t.png" class="corner-decor corner-seq" style="transform: rotate(30deg); top: -80px"/>
+        <img src="https://media-public.canva.com/c2bWA/MAFtw5c2bWA/1/tl.png" class="corner-decor corner-seq" style="top: -80px; filter: saturation(70%);"/>
+        <img src="https://media-public.canva.com/F9Gms/MAEec6F9Gms/1/tl.png" class="corner-decor corner-seq" />
+        <img src="https://media-public.canva.com/BtMMM/MAFyKzBtMMM/1/tl.png" class="corner-decor corner-seq" style="top: 10px; width: 120%; height: auto;"/>
+    </div>
+
+    <div class="corner-wrapper bottom-right">
+        <img src="https://media-public.canva.com/F9Gms/MAEec6F9Gms/1/tl.png" class="corner-decor corner-seq"/>
+        <img src="https://media-public.canva.com/htpDo/MAFCbYhtpDo/1/tl.png" class="corner-decor corner-seq" style="top: -80px; transform: rotate(20deg);"/>
+        <img src="https://media-public.canva.com/c2bWA/MAFtw5c2bWA/1/tl.png" class="corner-decor corner-seq" style="top: -120px; transform: rotate(1deg); filter: saturation(80%);" />
+        <img src="https://media-public.canva.com/BtMMM/MAFyKzBtMMM/1/tl.png" class="corner-decor corner-seq" style="top: 10px; width: 120%; height: auto;"/>
+        <img src="https://media-public.canva.com/KIwBA/MAFeooKIwBA/1/t.png" class="corner-decor corner-seq" style="transform: rotate(100deg); top: -80px; filter: contrast(120%);"/>
+    </div>
+
+  <div class="balloon-container" id="balloon-container"></div>
+
+
+  <div class="card">
+    <h1>สุขสันต์วันเกิดปะป๊า🎉</h1>
+    <img src="https://scontent.fbkk5-6.fna.fbcdn.net/v/t39.30808-6/493746655_10212738026521576_5230219905050759223_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFnjR5mytTL9Dx9d8hoY3SBByoxwxcisfoHKjHDFyKx-rr2EE5CCRpxkGf3dYh_US_zFerjFRJBDsMuDHICkw4T&_nc_ohc=gPX7THX-NwUQ7kNvwE63UZq&_nc_oc=AdnkAIHweHysV73RWp9B6SBdFgQGhIyusAlSTUX8gDPey-dE-jBpOVyW6igGUEiY_w4&_nc_zt=23&_nc_ht=scontent.fbkk5-6.fna&_nc_gid=mr1rpOu42U74rl6Nuv9erQ&oh=00_AfKFm6st-NK66DWZgQM5nEoyIOu81p1IgxD0UI0_bFIKuA&oe=6841A1A9" alt="Dad's Picture" class="img-main"/>
+    <p>ขอให้วันเกิดปีนี้และปีถัดๆไปมีแต่ความสุขและความแข็งแรงนะครับ</p>
+    <p style="margin-top: -10px">พวกผมเป็นกำลังใจให้เสมอ จุ๊ฟๆ</p>
+    <button onclick="releaseBalloons(); change_pic();" class="cute-button">เป้าเค้ก🎈</button>
+  </div>
+
+    <div id="player" style="display:none;"></div>
+ <audio id="partySound" src="https://www.myinstants.com/media/sounds/partyblower.mp3" preload="auto"></audio>
+  <script>
+    const pic_pre = ["https://scontent.fbkk5-6.fna.fbcdn.net/v/t39.30808-6/493746655_10212738026521576_5230219905050759223_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFnjR5mytTL9Dx9d8hoY3SBByoxwxcisfoHKjHDFyKx-rr2EE5CCRpxkGf3dYh_US_zFerjFRJBDsMuDHICkw4T&_nc_ohc=gPX7THX-NwUQ7kNvwE63UZq&_nc_oc=AdnkAIHweHysV73RWp9B6SBdFgQGhIyusAlSTUX8gDPey-dE-jBpOVyW6igGUEiY_w4&_nc_zt=23&_nc_ht=scontent.fbkk5-6.fna&_nc_gid=mr1rpOu42U74rl6Nuv9erQ&oh=00_AfKFm6st-NK66DWZgQM5nEoyIOu81p1IgxD0UI0_bFIKuA&oe=6841A1A9",
+    "https://scontent.fbkk5-5.fna.fbcdn.net/v/t39.30808-6/464437939_10211859878968436_6966403938980059627_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeEAywDQjXbDPG36qSdHv-qvLmh4_3D3t4guaHj_cPe3iOgpJy9t7OuaKwuiuWTHHT-lcjDJIDK2G0rqkELM1FBc&_nc_ohc=mOQ7ieUW6twQ7kNvwH_m0Qp&_nc_oc=AdmorIVDz6hmn5qLJzlgDj8FQKxAvrdGsuE3aHeQ4G8fK3AGLRuptaWgNrCur-E5T9A&_nc_zt=23&_nc_ht=scontent.fbkk5-5.fna&_nc_gid=d9BHn-VdJl4d7dC90ArJVw&oh=00_AfKi9vLGNQ0JknAO9KRcAMK9cDWMoBHiG3wW7MFt_aHmoA&oe=6841BDE1",
+    "https://scontent.fbkk5-3.fna.fbcdn.net/v/t39.30808-6/490257443_10212647037966919_5958881621924671461_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHRwO-4n0oIpY_Osf0tlbMcl95HgH-VS6GX3keAf5VLoT0C45lYR_hLILBGL6ZWPt56ofW8xZHXXwZkIodHKafB&_nc_ohc=XBoZuDSyavQQ7kNvwFOK_xV&_nc_oc=AdmV7HZ4xW7K5HNLkLAw4crRzCYDGFANyj2B1NoQs_5lNzxaUGCH_0VlxnQGMiVtNxg&_nc_zt=23&_nc_ht=scontent.fbkk5-3.fna&_nc_gid=26aMUPuzSuZII7lstnGSIA&oh=00_AfJsiagdvFZfZeCoS2j0m6Qmjv2OGXynh1ZFao71v8lDyQ&oe=6841CA5F",
+    "https://scontent.fbkk5-6.fna.fbcdn.net/v/t39.30808-6/491503577_9723697311025958_3899941954781098124_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=94e2a3&_nc_eui2=AeEiIFkT07OBaKryFy5RN3SKAlVnQxVNFpgCVWdDFU0WmLNmrjV3qU7Pd8lMZf9oX1RszXxW1JIiX6Txq8k3VFVD&_nc_ohc=AM1Yy3yfCrcQ7kNvwH2zkMT&_nc_oc=AdlpYnH8EkyyRKK2c-h6gJBJ7Fz1qIltr7RuMvhqpqF-tibkmhnjL-uPcqdq7aUM7g8&_nc_zt=23&_nc_ht=scontent.fbkk5-6.fna&_nc_gid=fF-F3W07BJA9n_9swfupVg&oh=00_AfJMqdu6eBTeMoi3CVZAQP26YvuJtAmBnh97dJdw8-so4A&oe=6841D415",
+    "https://scontent.fbkk5-4.fna.fbcdn.net/v/t39.30808-6/476448557_10212308892513494_576892612377002189_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFy7P9UUYn5ZpZfpY71M50rniv9ImAOjXaeK_0iYA6NdkHZCq08TMoETasJeHBlolpn-pNyAxQs3IWzRwYhQ274&_nc_ohc=cEPqnznYBqcQ7kNvwGYYn6e&_nc_oc=Adk1il_blRrzc74-JDjTCq-RxB2z_-nLLmIVMzd-Amci1Cl6o_0YbgMYmuQzyAZKx6o&_nc_zt=23&_nc_ht=scontent.fbkk5-4.fna&_nc_gid=gmmV89CzU6RJZhaJ669Ocw&oh=00_AfI0SdgFd5eQ0EHY2Sd630E9UPPyZ0dCoqo16S3YcWIMVQ&oe=6841DFEF"]
+    function releaseBalloons() {
+      const container = document.getElementById('balloon-container');
+      const colors = ['#ff6666', '#ffcc66', '#66ccff', '#99ff99', '#ff99ff', '#ffd700'];
+
+      for (let i = 0; i < 30; i++) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'balloon-wrapper';
+        wrapper.style.left = Math.random() * 100 + 'vw';
+        wrapper.style.animationDuration = (4 + Math.random() * 2) + 's';
+
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+        const stringContainer = document.createElement('div');
+        stringContainer.className = 'string';
+
+        for (let j = 0; j < 12; j++) {
+          const segment = document.createElement('div');
+          segment.className = 'string-segment';
+          segment.style.animationDelay = `${j * 0.1}s`;
+          stringContainer.appendChild(segment);
+        }
+
+        wrapper.appendChild(balloon);
+        wrapper.appendChild(stringContainer);
+        container.appendChild(wrapper);
+
+        setTimeout(() => {
+          wrapper.remove();
+        }, 7000);
+      }
+    }
+
+    function cycleImages(wrapperSelector, interval) {
+        const wrappers = document.querySelectorAll(wrapperSelector);
+
+        wrappers.forEach(wrapper => {
+            const images = wrapper.querySelectorAll('.corner-seq');
+            let index = 0;
+            images.forEach((img, i) => img.style.opacity = i === 0 ? Math.random() * (0.6 - 0.3) + 0.3 : 0);
+
+            setInterval(() => {
+                images[index].style.opacity = 0;
+                index = (index + 1) % images.length;
+                images[index].style.opacity = 1;
+            }, interval + Math.floor(Math.random() * (2000 - 1000 + 1)) + 1000);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        cycleImages('.top-left', 5000);
+        setTimeout(() => cycleImages('.top-right', 6000), 1000);
+        setTimeout(() => cycleImages('.bottom-left', 4000), 1500);
+        setTimeout(() => cycleImages('.bottom-right', 7000), 1800);
+    });
+
+ document.querySelectorAll('.cute-button').forEach(button => {
+  button.addEventListener('click', (e) => {
+    // Remove existing wave
+    let wave = button.querySelector('.button-wave');
+    if (wave) {
+      wave.remove();
+    }
+
+    // Create wave, centered on button
+    wave = document.createElement('span');
+    wave.classList.add('button-wave');
+    // No left/top needed, CSS will center it with margin auto
+    button.appendChild(wave);
+
+    wave.addEventListener('animationend', () => {
+      wave.remove();
+    });
+
+    // Create sparkles container at click position relative to button
+    const rect = button.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const sparkleContainer = document.createElement('div');
+    sparkleContainer.style.position = 'absolute';
+    sparkleContainer.style.left = `${x}px`;
+    sparkleContainer.style.top = `${y}px`;
+    sparkleContainer.style.pointerEvents = 'none';
+    sparkleContainer.style.width = '0';
+    sparkleContainer.style.height = '0';
+    button.appendChild(sparkleContainer);
+
+    for (let i = 0; i < 8; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkleContainer.appendChild(sparkle);
+
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = 30 + Math.random() * 20;
+
+      sparkle.style.setProperty('--angle', angle);
+      sparkle.style.setProperty('--distance', `${distance}px`);
+      sparkle.style.animationDelay = (i * 0.05) + 's';
+    }
+
+    setTimeout(() => {
+      sparkleContainer.remove();
+    }, 800);
+  });
+});
+
+    let pic = 1;
+    
+    function change_pic(){
+        document.getElementById('partySound').currentTime = 0;
+        document.getElementById('partySound').volume = 0.4;
+        document.getElementById('partySound').play()
+        const img = document.querySelector('.img-main');
+        img.classList.add('flip');
+        setTimeout(()=>{if(pic == 1){
+            document.querySelector(".img-main").src = pic_pre[1]
+            document.querySelector(".img-main").style = "object-position: 35% center;"
+            pic++;
+        }
+        else if(pic== 2){
+            document.querySelector(".img-main").src = pic_pre[2]
+            document.querySelector(".img-main").style = "object-position: 35% center;"
+            pic++;
+        }
+        else if(pic == 3){
+            document.querySelector(".img-main").src = pic_pre[3]
+            document.querySelector(".img-main").style = "object-position: 60% center;"
+            pic++;
+        }
+        else if(pic == 4){
+            document.querySelector(".img-main").src = pic_pre[4]
+            document.querySelector(".img-main").style = "object-position: 30% center;"
+            pic = 0;
+        }
+        else{
+            document.querySelector(".img-main").src = pic_pre[0]
+            document.querySelector(".img-main").style = "object-position: 73% center;"
+            pic++;
+        }
+        img.classList.remove('flip');
+        confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });},300)
+        
+    }
+
+  const dots = document.getElementById('dots');
+  let dotCount = 0;
+  const maxDots = 3;
+  const intervalTime = 500; // ms
+
+  const dotsInterval = setInterval(() => {
+    dotCount = (dotCount + 1) % (maxDots + 1); // 0 to 3
+    dots.textContent = '.'.repeat(dotCount);
+  }, intervalTime);
+
+  // Show start screen after 3 seconds loading
+  setTimeout(() => {
+    clearInterval(dotsInterval);
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('startScreen').style.display = 'flex';
+  }, 3000);
+
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.body.appendChild(tag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '0',
+      width: '0',
+      videoId: '4sZmPHJPvZE',
+      playerVars: {
+        'autoplay': 1,
+        'loop': 1,
+        'playlist': '4sZmPHJPvZE',
+        'controls': 0,
+        'mute': 1
+      },
+      events: {
+        'onReady': onPlayerReady
+      }
+    });
+  }
+
+  function onPlayerReady(event) {
+    var startScreen = document.getElementById('startScreen');
+
+    startScreen.addEventListener('click', function () {
+      startScreen.style.display = 'none';
+      player.unMute();
+      player.playVideo();
+    });
+  }
+
+  </script>
+</body>
+</html>
