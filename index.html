@@ -520,36 +520,13 @@
     document.getElementById('startScreen').style.display = 'flex';
   }, 3000);
 
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  document.body.appendChild(tag);
-
-  var player;
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '0',
-      width: '0',
-      videoId: '4sZmPHJPvZE',
-      playerVars: {
-        'autoplay': 1,
-        'loop': 1,
-        'playlist': '4sZmPHJPvZE',
-        'controls': 0,
-        'mute': 1
-      },
-      events: {
-        'onReady': onPlayerReady
-      }
-    });
-  }
-
+  const audio = new Audio("https://github.com/MrLampy/Papa-2025-48-HBD.git/Happy_Birthday_Jazzy_Piano_Arrangement_by_Jonny_May");
   function onPlayerReady(event) {
     var startScreen = document.getElementById('startScreen');
 
     startScreen.addEventListener('click', function () {
       startScreen.style.display = 'none';
-      player.unMute();
-      player.playVideo();
+      audio.play()
     });
   }
 
